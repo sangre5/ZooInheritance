@@ -6,7 +6,7 @@ namespace ZooInheritance
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Zoo Branch from GitHub!");
+            Console.WriteLine("Hello Zoo Branch from GitHub again!");
         }
     }
 }
