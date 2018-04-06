@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic; //use Lists
 
 namespace ZooInheritance
 {
@@ -13,6 +14,22 @@ namespace ZooInheritance
             Cow mu = new Cow("Mu", 4);
             mu.WhatAreYou();
             mu.MakeSound();
+
+            Cow mu2 = new Cow("Mumu", 4, true);
+
+            List<Cow> listOfAnimals = new List<Cow>();
+            listOfAnimals.Add(mu);
+            listOfAnimals.Add(mu2);
+
+            foreach (Cow cow in listOfAnimals)
+            {
+                if (cow.hasWings)
+                {
+                    Console.WriteLine($"A flying cow named, {cow.name}!");
+                }
+            }
+
+      
         }
     }
 
@@ -20,16 +37,12 @@ namespace ZooInheritance
     {
         public string name { get; set; }
         public int numberOfLegs { get; set; }
-        //public bool hasWings { get; set; }
-        //public string category { get; set; }
+        public bool hasWings { get; set; }
 
         public virtual void MakeSound()
         {
             Console.WriteLine("I make no sound :(");
         }
-
-        
-
         
     }
 
@@ -66,6 +79,13 @@ namespace ZooInheritance
         {
             this.name = animalName;
             this.numberOfLegs = numberOfLegs;
+        }
+
+        public Cow(string animalName, int legs, bool wings)
+        {
+            this.name = animalName;
+            this.numberOfLegs = legs;
+            this.hasWings = wings;
         }
     }
 }
