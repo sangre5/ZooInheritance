@@ -7,15 +7,21 @@ namespace ZooInheritance
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcome to the zoo!");
+
             Giraffe arnold = new Giraffe("Arnold", 3);
             arnold.WhatAreYou();
             arnold.MakeSound();
+            arnold.AnimalCategory();        
+            
 
             Cow mu = new Cow("Mu", 4);
             mu.WhatAreYou();
             mu.MakeSound();
+            mu.AnimalCategory();
 
             Cow mu2 = new Cow("Mumu", 4, true);
+            mu2.AnimalCategory();
 
             List<Cow> listOfAnimals = new List<Cow>();
             listOfAnimals.Add(mu);
@@ -23,11 +29,15 @@ namespace ZooInheritance
 
             foreach (Cow cow in listOfAnimals)
             {
-                if (cow.hasWings)
+                if (cow.HasWings)
                 {
-                    Console.WriteLine($"A flying cow named, {cow.name}!");
+                    Console.WriteLine($"A flying cow named, {cow.Name}!");
                 }
             }
+
+            Shark Benny = new Shark();
+            Benny.AnimalCategory();
+            Benny.MakeSound();
 
       
         }
@@ -35,30 +45,42 @@ namespace ZooInheritance
 
     public class Animal
     {
-        public string name { get; set; }
-        public int numberOfLegs { get; set; }
-        public bool hasWings { get; set; }
+        public string Name { get; set; }
+        public int NumberOfLegs { get; set; }
+        public bool HasWings { get; set; }
+        public enum Category { mammal, reptile, fish, fantasy };
+        public Category GetCategory { get; set; }
 
         public virtual void MakeSound()
         {
             Console.WriteLine("I make no sound :(");
         }
-        
+
+        public void AnimalCategory()
+        {
+            Console.WriteLine($"I am a {GetCategory}");
+        }
+
     }
 
     public class Giraffe : Animal
-    {
+    {   
         
 
         public void WhatAreYou()
         {
             Console.WriteLine("I am a Giraffe");
+            
         }
+
+        
 
         public Giraffe(string animalName, int legs)
         {
-            this.name = animalName;
-            this.numberOfLegs = numberOfLegs;
+            this.Name = animalName;
+            this.NumberOfLegs = NumberOfLegs;
+            this.GetCategory = Category.mammal;
+
         }
     }
 
@@ -77,15 +99,30 @@ namespace ZooInheritance
 
         public Cow(string animalName, int legs)
         {
-            this.name = animalName;
-            this.numberOfLegs = numberOfLegs;
+            this.Name = animalName;
+            this.NumberOfLegs = NumberOfLegs;
+            this.GetCategory = Category.mammal;
         }
 
         public Cow(string animalName, int legs, bool wings)
         {
-            this.name = animalName;
-            this.numberOfLegs = legs;
-            this.hasWings = wings;
+            this.Name = animalName;
+            this.NumberOfLegs = legs;
+            this.HasWings = wings;
+            this.GetCategory = Category.fantasy;
+        }
+    }
+
+    public class Shark : Animal
+    {
+        public void WhatAreYou()
+        {
+            Console.WriteLine("I am a Shark");
+        }
+
+        public Shark()
+        {
+            this.GetCategory = Category.fish;
         }
     }
 }
