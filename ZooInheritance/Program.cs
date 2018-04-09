@@ -2,28 +2,26 @@
 using System.Collections.Generic; //use Lists
 
 namespace ZooInheritance
-{
+{    
     public class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the zoo!");
 
-            Giraffe arnold = new Giraffe("Arnold", 3);
+            Giraffe arnold = new Giraffe("Arnold");
             arnold.WhatAreYou();
             arnold.MakeSound();
-            arnold.AnimalCategory();
             arnold.AddDescription("He only has three legs, Benny ate one. Honestly Arnold had it coming");
             arnold.ViewComments(arnold);
+            arnold.Eat();
             
 
-            Cow mu = new Cow("Mu", 4);
+            Cow mu = new Cow("Mu");
             mu.WhatAreYou();
             mu.MakeSound();
-            mu.AnimalCategory();
 
-            Cow mu2 = new Cow("Mumu", 4, true);
-            mu2.AnimalCategory();
+            Cow mu2 = new Cow("Mumu");
 
             List<Cow> listOfAnimals = new List<Cow>();
             listOfAnimals.Add(mu);
@@ -38,9 +36,19 @@ namespace ZooInheritance
             }
 
             Shark Benny = new Shark("Benny");
-            Benny.AnimalCategory();
+            Benny.WhatAreYou();
             Benny.MakeSound();
+            Benny.SwimAround(Benny);
+            Benny.Eat();
 
+            Lizard Dimitri = new Lizard("Dimitri");
+            Dimitri.WhatAreYou();
+            Dimitri.Eat();
+
+            int animalCount = Animal.AnimalCount();
+            Console.WriteLine($"There are {Animal.AnimalCount()} animals at the zoo");
+
+            Animal.AnimalVerbose();
      
         }
     }
