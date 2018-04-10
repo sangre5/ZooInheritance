@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic; //use Lists
+using System.Linq;
 
 namespace ZooInheritance
 {    
@@ -14,7 +15,7 @@ namespace ZooInheritance
             arnold.MakeSound();
             arnold.AddDescription("He only has three legs, Benny ate one. Honestly Arnold had it coming");
             arnold.ViewComments(arnold);
-            arnold.Eat();
+            arnold.EatGreen();
             
 
             Cow mu = new Cow("Mu");
@@ -39,17 +40,33 @@ namespace ZooInheritance
             Benny.WhatAreYou();
             Benny.MakeSound();
             Benny.SwimAround(Benny);
-            Benny.Eat();
+            Benny.EatAnother(Benny, mu);
 
             Lizard Dimitri = new Lizard("Dimitri");
             Dimitri.WhatAreYou();
-            Dimitri.Eat();
+            Dimitri.EatGreen();
+
+            Lizard Ana = new Lizard("Ana");
+            Ana.WhatAreYou();
+            Ana.MakeSound();
+            Ana.LayEggs(Ana);
+
+            Tiger Malu = new Tiger("Malu");
+            Malu.WhatAreYou();
+            Malu.MakeSound();
+            Malu.EatAnother(Malu, Dimitri);
+
 
             int animalCount = Animal.AnimalCount();
             Console.WriteLine($"There are {Animal.AnimalCount()} animals at the zoo");
 
             Animal.AnimalVerbose();
-     
+
+            Animal.KillHervibores();
+
+            Animal.AnimalCount();
+            Animal.AnimalVerbose();
+               
         }
     }
 }
