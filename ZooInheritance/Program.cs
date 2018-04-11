@@ -17,25 +17,12 @@ namespace ZooInheritance
             arnold.ViewComments(arnold);
             arnold.EatGreen();
             
-
             Cow mu = new Cow("Mu");
             mu.WhatAreYou();
             mu.MakeSound();
 
             Cow mu2 = new Cow("Mumu");
-
-            List<Cow> listOfAnimals = new List<Cow>();
-            listOfAnimals.Add(mu);
-            listOfAnimals.Add(mu2);
-
-            foreach (Cow cow in listOfAnimals)
-            {
-                if (cow.HasWings)
-                {
-                    Console.WriteLine($"A flying cow named, {cow.Name}!");
-                }
-            }
-
+                                    
             Shark Benny = new Shark("Benny");
             Benny.WhatAreYou();
             Benny.MakeSound();
@@ -57,16 +44,28 @@ namespace ZooInheritance
             Malu.EatAnother(Malu, Dimitri);
 
 
-            int animalCount = Animal.AnimalCount();
             Console.WriteLine($"There are {Animal.AnimalCount()} animals at the zoo");
+
+            
+            //Animal.KillHervibores();
+
+            Animal.AnimalCount();
+            Animal.AnimalVerbose();
+
+            //Animal.AddGreenFood(50);
+
+            Animal.AddRedFood(1);
+
+            arnold.WantsFood(arnold);
+            Malu.WantsFood(Malu);
 
             Animal.AnimalVerbose();
 
             Animal.KillHervibores();
 
-            Animal.AnimalCount();
             Animal.AnimalVerbose();
                
         }
+
     }
 }
