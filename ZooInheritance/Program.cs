@@ -12,14 +12,26 @@ namespace ZooInheritance
 
             Console.WriteLine("Welcome to the zoo!");
 
-            CoolZoo.AddAnimal();
+            CoolZoo.AddAnimals();
 
             Console.WriteLine($"There are {CoolZoo.AnimalCount()} animals in the zoo");
-            
 
+            CoolZoo.AnimalVerbose();
+
+            //CoolZoo.KillHervibores();
+
+            CoolZoo.AnimalVerbose();
+
+            CoolZoo.AddGreenFood(5);
+            CoolZoo.AddRedFood(5);
+
+            CoolZoo.WantsFood("Malu");
+            CoolZoo.WantsFood("Arnold");
+
+            CoolZoo.KillHervibores();
+
+            CoolZoo.AnimalVerbose();
             
-            
-               
         }
 
     }

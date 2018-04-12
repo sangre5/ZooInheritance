@@ -10,9 +10,10 @@ public abstract class Animal
     public enum Category { mammal, reptile, fish, bird };
     public Category GetCategory { get; set; }
     public string Comment { get; set; }
-    public static int GreenFood { get; set; }
-    public static int RedFood { get; set; }
+
     
+
+
 
     public virtual void MakeSound()
     {
@@ -25,7 +26,6 @@ public abstract class Animal
     {
         Console.WriteLine($"{animal.Name} Comments:");
         Console.WriteLine(animal.Comment);
-
     }
 
     public void AddDescription(string comment)
@@ -35,32 +35,18 @@ public abstract class Animal
 
     public virtual void EatGreen()
     {
-
+        Console.WriteLine("Eating some fren stuff");
     }
 
-    public virtual void EatAnother(Animal carnivore, Animal herbivore)
+    public virtual void EatFood(Animal carnivore, Animal herbivore)
     {
-
+        Console.WriteLine("Eating my zoo pals");
     }
 
-    
-
-    public static void AddGreenFood(int food)
+    public virtual void EatFood(Animal animal)
     {
-        Animal.GreenFood += food;
-        Console.WriteLine($"There are {Animal.GreenFood} units of green food");
+        Console.WriteLine("Eating something I found");
     }
-
-    public static void AddRedFood(int food)
-    {
-        Animal.RedFood += food;
-        Console.WriteLine($"There are {Animal.RedFood} units of red food");
-    }
-
-    
-
-    public abstract void WantsFood(Animal animal);
-
 }
 
 public class Giraffe : Mammal, IHervibore
@@ -76,17 +62,17 @@ public class Giraffe : Mammal, IHervibore
         Console.WriteLine("Eating trees");
     }
 
-    public override void WantsFood(Animal animal)
+    public override void EatFood(Animal animal)
     {
-        if (Animal.GreenFood >= 20)
+        if (ZooInheritance.Zoo.GreenFood >= 20)
         {
-            Animal.GreenFood -= 20;
+            ZooInheritance.Zoo.GreenFood -= 20;
             Console.WriteLine($"{animal.Name} ate 20 units of green food");
         }
         else
         {
             Console.WriteLine("Not enough food");
-            Herbivore.Remove(animal);
+            ZooInheritance.Zoo.RemoveAnimal(animal);
             Console.WriteLine($"{animal.Name} died of starvation");
         }        
     }
@@ -96,7 +82,7 @@ public class Giraffe : Mammal, IHervibore
         this.Name = animalName;
         this.NumberOfLegs = 4;
         this.GetCategory = Category.mammal;
-        Herbivore.Add(this);
+        ZooInheritance.Zoo.AddAnimal(this);
     }
 }
 
@@ -117,17 +103,17 @@ public class Cow : Mammal, IHervibore
         Console.WriteLine("Eating some grass");
     }
 
-    public override void WantsFood(Animal animal)
+    public override void EatFood(Animal animal)
     {
-        if (Animal.GreenFood >= 15)
+        if (ZooInheritance.Zoo.GreenFood >= 15)
         {
-            Animal.GreenFood -= 15;
+            ZooInheritance.Zoo.GreenFood -= 15;
             Console.WriteLine($"{animal.Name} ate 15 units of green food");
         }
         else
         {
             Console.WriteLine("Not enough food");
-            Herbivore.Remove(animal);
+            ZooInheritance.Zoo.RemoveAnimal(animal);
             Console.WriteLine($"{animal.Name} died of starvation");
         }
     }
@@ -137,7 +123,7 @@ public class Cow : Mammal, IHervibore
         this.Name = animalName;
         this.NumberOfLegs = 4;
         this.GetCategory = Category.mammal;
-        Herbivore.Add(this);
+        ZooInheritance.Zoo.AddAnimal(this);
     }   
 }
 
@@ -148,26 +134,41 @@ public class Shark : Fish, ICarnivore
         Console.WriteLine("I am a Shark");
     }
 
-    public override void WantsFood(Animal animal)
+    public override void EatFood(Animal animal)
     {
-        if (Animal.RedFood >= 5)
+        if (ZooInheritance.Zoo.RedFood >= 5)
         {
-            Animal.RedFood -= 5;
+            ZooInheritance.Zoo.RedFood -= 5;
             Console.WriteLine($"{animal.Name} ate 5 units of red food");
         }
         else
         {
             Console.WriteLine("Not enough food");
             Random rnd = new Random();
-            int h = rnd.Next(0, Herbivore.Count - 1);
-            EatAnother(this, Herbivore[h]);
+            int h = rnd.Next(0, ZooInheritance.Zoo.HerbivoreCount() - 1);
+            //eatanother(this, zooinheritance.zoo.eatanother[h]);
         }
     }
 
-    public override void EatAnother(Animal carnivore, Animal herbivore)
+    public override void EatFood(Animal carnivore, Animal herbivore)
     {
+        if (ZooInheritance.Zoo.RedFood >= 5)
+        {
+            ZooInheritance.Zoo.RedFood -= 5;
+            Console.WriteLine($"{carnivore.Name} ate 5 units of red food");
+        }
+        else
+        {
+            Console.WriteLine("Not enough food");
+            ZooInheritance.Zoo.RemoveAnimal(herbivore);
+            Console.WriteLine($"{carnivore.Name} ate {herbivore.Name}");
+
+        }
+
+
+
         Console.WriteLine($"{carnivore.Name} is eating the {herbivore} named {herbivore.Name}");
-        Herbivore.Remove(herbivore);
+        ZooInheritance.Zoo.RemoveAnimal(herbivore);
     }
 
 
@@ -177,7 +178,7 @@ public class Shark : Fish, ICarnivore
         this.Name = name;
         this.GetCategory = Category.fish;
         this.NumberOfLegs = 0;
-        Carnivore.Add(this);
+        ZooInheritance.Zoo.AddAnimal(this);
     }
 
     
@@ -195,25 +196,21 @@ public class Tiger : Mammal, ICarnivore
         Console.WriteLine("raaaawrr");
     }
 
-    public override void EatAnother(Animal carnivore, Animal herbivore)
-    {
-        Console.WriteLine($"{carnivore.Name} is eating the {herbivore} named {herbivore.Name}");
-        Herbivore.Remove(herbivore);
-    }
+    
 
-    public override void WantsFood(Animal animal)
+    public override void EatFood(Animal carnivore, Animal herbivore)
     {
-        if (Animal.RedFood >= 10)
+        if (ZooInheritance.Zoo.RedFood >= 10)
         {
-            Animal.RedFood -= 10;
-            Console.WriteLine($"{animal.Name} ate 10 units of red food");
+            ZooInheritance.Zoo.RedFood -= 10;
+            Console.WriteLine($"{carnivore.Name} ate 10 units of red food");
         }
         else
         {
             Console.WriteLine("Not enough food");
-            Random rnd = new Random();
-            int h = rnd.Next(0, Herbivore.Count - 1);
-            EatAnother(this, Herbivore[h]);
+            Console.WriteLine("Not enough food");
+            ZooInheritance.Zoo.RemoveAnimal(herbivore);
+            Console.WriteLine($"{carnivore.Name} ate {herbivore.Name}");
         }
     }
 
@@ -222,8 +219,7 @@ public class Tiger : Mammal, ICarnivore
         this.Name = name;
         this.GetCategory = Category.mammal;
         this.NumberOfLegs = 4;
-        Carnivore.Add(this);
-
+        ZooInheritance.Zoo.AddAnimal(this);
     }
 }
 
@@ -240,17 +236,17 @@ public class Lizard : Reptile, IHervibore
         Console.WriteLine("Eating green lizard stuff");
     }
 
-    public override void WantsFood(Animal animal)
+    public override void EatFood(Animal animal)
     {
-        if (Animal.GreenFood >= 1)
+        if (ZooInheritance.Zoo.GreenFood >= 1)
         {
-            Animal.GreenFood -= 1;
+            ZooInheritance.Zoo.GreenFood -= 1;
             Console.WriteLine($"{animal.Name} ate 1 unit of green food");
         }
         else
         {
             Console.WriteLine("Not enough food");
-            Herbivore.Remove(animal);
+            ZooInheritance.Zoo.RemoveAnimal(animal);
             Console.WriteLine($"{animal.Name} died of starvation");
         }
     }
@@ -260,7 +256,7 @@ public class Lizard : Reptile, IHervibore
         this.NumberOfLegs = 4;
         this.GetCategory = Category.reptile;
         this.Name = name;
-        Herbivore.Add(this);
+        ZooInheritance.Zoo.AddAnimal(this);
     }
 }
 
@@ -308,5 +304,5 @@ public interface IHervibore
 
 public interface ICarnivore
 {
-    void EatAnother(Animal carnivore, Animal herbivore);
+    void EatFood(Animal carnivore, Animal herbivore);
 }
